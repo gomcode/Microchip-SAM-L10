@@ -72,13 +72,16 @@
 void PORT_Initialize(void)
 {
    /************************** GROUP 0 Initialization *************************/
-   PORT_REGS->GROUP[0].PORT_DIR = 0x80;
+   PORT_REGS->GROUP[0].PORT_DIR |= 0x80;
+   PORT_REGS->GROUP[0].PORT_OUT |= 0x8000000; //from DAC Prj
+   /* 0x1 == Pin Input Enable, 0x5 == Pin Input/Pull Enable & OutputDriver==Strong Set */
    PORT_REGS->GROUP[0].PORT_PINCFG[2] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[24] = 0x1;
    PORT_REGS->GROUP[0].PORT_PINCFG[25] = 0x1;
+   PORT_REGS->GROUP[0].PORT_PINCFG[27] = 0x5; //from DAC Prj
 
-   PORT_REGS->GROUP[0].PORT_PMUX[1] = 0x1;
-   PORT_REGS->GROUP[0].PORT_PMUX[12] = 0x22;
+   PORT_REGS->GROUP[0].PORT_PMUX[1] = 0x1; //3.PA02(DAC VOUT) == function B(VOUT) //from DAC Prj
+   PORT_REGS->GROUP[0].PORT_PMUX[12] = 0x22; //24.PA25,23.PA24 == function C(SERCOM)
                 
 }
 

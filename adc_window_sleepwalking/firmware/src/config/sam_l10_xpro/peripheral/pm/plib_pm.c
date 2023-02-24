@@ -58,10 +58,10 @@
 void PM_Initialize( void )
 {
     /* Configure PM */
-    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_VREGSMOD(0);
+    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_VREGSMOD(0); // VREG Switching Mode
 
     /* Clear INTFLAG.PLRDY */
-    PM_REGS->PM_INTFLAG |= PM_INTENCLR_PLRDY_Msk;
+    PM_REGS->PM_INTFLAG |= PM_INTENCLR_PLRDY_Msk; //Performance Level Ready
 
     /* Configure performance level */
     PM_REGS->PM_PLCFG = PM_PLCFG_PLSEL_PL2;

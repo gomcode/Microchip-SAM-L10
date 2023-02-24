@@ -59,6 +59,12 @@
 #include "peripheral/adc/plib_adc.h"
 #include "peripheral/rtc/plib_rtc.h"
 
+//DAC 
+#include "peripheral/supc/plib_supc.h"
+#include "peripheral/eic/plib_eic.h"
+#include "peripheral/tc/plib_tc2.h"
+#include "peripheral/dac/plib_dac.h"
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

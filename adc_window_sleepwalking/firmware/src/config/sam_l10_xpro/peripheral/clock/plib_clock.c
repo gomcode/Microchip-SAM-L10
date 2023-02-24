@@ -45,17 +45,18 @@ static void OSCCTRL_Initialize(void)
 {
     /**************** OSC16M IniTialization *************/
     OSCCTRL_REGS->OSCCTRL_OSC16MCTRL = OSCCTRL_OSC16MCTRL_FSEL(0x0) | OSCCTRL_OSC16MCTRL_RUNSTDBY_Msk | OSCCTRL_OSC16MCTRL_ENABLE_Msk;
-}
+} //                        Oscillator Frequency Selection [0x?? 4,8,12,16]      Run in Standby              Oscillator Enable
 
 static void OSC32KCTRL_Initialize(void)
 {
-	OSC32KCTRL_REGS->OSC32KCTRL_RTCCTRL = OSC32KCTRL_RTCCTRL_RTCSEL(0);
+	OSC32KCTRL_REGS->OSC32KCTRL_RTCCTRL = OSC32KCTRL_RTCCTRL_RTCSEL(0); // RTC Clock Selection
 }
 
 
 static void FDPLL_Initialize(void)
 {
 	GCLK_REGS->GCLK_PCHCTRL[0] = GCLK_PCHCTRL_GEN(0x1)  | GCLK_PCHCTRL_CHEN_Msk;
+    //            [0..20]         Generator Selection        Channel Enable
 	while ((GCLK_REGS->GCLK_PCHCTRL[0] & GCLK_PCHCTRL_CHEN_Msk) != GCLK_PCHCTRL_CHEN_Msk)
     {
         /* Wait for synchronization */
@@ -94,7 +95,7 @@ static void GCLK0_Initialize(void)
 {
 
     GCLK_REGS->GCLK_GENCTRL[0] = GCLK_GENCTRL_DIV(2) | GCLK_GENCTRL_SRC(7) | GCLK_GENCTRL_GENEN_Msk;
-
+    //           [0,1,2,3,4]       Division Factor    GeneratorClockSrcSel. 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL0_Msk) == GCLK_SYNCBUSY_GENCTRL0_Msk)
     {
         /* wait for the Generator 0 synchronization */
@@ -105,7 +106,7 @@ static void GCLK0_Initialize(void)
 static void GCLK1_Initialize(void)
 {
     GCLK_REGS->GCLK_GENCTRL[1] = GCLK_GENCTRL_DIV(4) | GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk;
-
+    //           [0,1,2,3,4]       Division Factor    GeneratorClockSrcSel. 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL1_Msk) == GCLK_SYNCBUSY_GENCTRL1_Msk)
     {
         /* wait for the Generator 1 synchronization */
@@ -115,10 +116,10 @@ static void GCLK1_Initialize(void)
 void CLOCK_Initialize (void)
 {
     /* Function to Initialize the Oscillators */
-    OSCCTRL_Initialize();
+    OSCCTRL_Initialize(); // DAC와 약간 다름
 
     /* Function to Initialize the 32KHz Oscillators */
-    OSC32KCTRL_Initialize();
+    OSC32KCTRL_Initialize(); //같음
 
     GCLK1_Initialize();
     FDPLL_Initialize();

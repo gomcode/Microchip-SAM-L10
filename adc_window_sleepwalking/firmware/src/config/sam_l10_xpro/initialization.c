@@ -137,23 +137,27 @@ static void STDIO_BufferModeSet(void)
 
 void SYS_Initialize ( void* data )
 {
-    NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_RWS(2);
+    NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_RWS(2); // NVM Read Wait States //the same
 
-    PM_Initialize();
+    PM_Initialize(); // the same
+    STDIO_BufferModeSet(); // the same
+    PORT_Initialize(); // Some changed from DAC Prj
 
-    STDIO_BufferModeSet();
-
-
-  
-    PORT_Initialize();
-
-    CLOCK_Initialize();
+    CLOCK_Initialize(); // the same
 
 
+// DAC Init.
+    SUPC_Initialize();
+    EIC_Initialize();
+    //*************************************************************************    
+    //******************************** 리뷰 완료 *******************************
+    TC2_TimerInitialize(); // <-작동시 터미널 동작 X
+    DAC_Initialize(); // <-작동시 터미널 동작 X
+ 
 
-    NVMCTRL_Initialize();
+    NVMCTRL_Initialize(); // the same
 
-    EVSYS_Initialize();
+    EVSYS_Initialize(); // DAC엔 없다
 
     SERCOM0_USART_Initialize();
 
